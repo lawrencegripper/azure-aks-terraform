@@ -5,9 +5,7 @@
 
 This project aims to show a simple example of how you can setup a fully featured k8s cluster on Azure using terraform. 
 
-## What does it create?
-
-It creates a fully managed Kuberentes cluster in Azure and deploy managed Azure Monitoring and Redis - then it hooks them all up. 
+## What does it create? 
 
 The `main.tf` deploys a [`resourcegroup`](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview) in which an [`aks cluster`](https://docs.microsoft.com/en-us/azure/aks/), [`log analytics workspace`](https://docs.microsoft.com/en-us/azure/log-analytics/), [`managed redis cache`](https://docs.microsoft.com/en-us/azure/redis-cache/) and a [`container monitoring`](https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-containers) solution are added.
 
