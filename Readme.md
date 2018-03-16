@@ -1,5 +1,8 @@
 # Kubernetes on Azure using Terraform
 
+> Warning: This template relies on two PR's which may not yet be released see:
+    @jjcollinge: [AKS credentials export](https://github.com/terraform-providers/terraform-provider-azurerm/pull/953) & @lawrencegripper: [Log Analytics Solution provider](https://github.com/terraform-providers/terraform-provider-azurerm/pull/952)
+
 This project aims to show a simple example of how you can setup a fully featured k8s cluster on Azure using terraform. 
 
 In the repo we have two templates. The first deploys K8s with Log Analytics Container Monitoring configured and nothing else. The second is deploys commonly used services like managed Postgres, Redis and monitoring (via Azure Log Analytics) to jump start your work. 
