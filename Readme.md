@@ -39,7 +39,7 @@ linux_admin_ssh_publickey = "ssh-rsa AAAasdfasdc2EasdfasdfAAABAQC+b42lMQef/l5D8c
 
 ```
 5. Download the Kuberentes provider by running `boostrap_linux.sh` (or mac, windows)
-4. Run `terraform init` then `terraform plan` to see what will be created... finally if it looks good run `terraform apply` to create your cluster
+4. Run `terraform init` then `terraform plan -var-file=variables.tfvars` to see what will be created... finally if it looks good run `terraform apply -var-file=variables.tfvars` to create your cluster
 
 ## Notes/FAQ
 
