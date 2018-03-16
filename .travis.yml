@@ -1,17 +1,21 @@
 env:
-  - tf_version=0.11.3
+  global:
+    - secure: p8EbkyYiKmQmWv2j8oBGqucUkAfXZHyv6cRlvVJ4pwiQ/capo4L7KoNfx0FM5gNmVxj33KCtGrSqvnvL38eXSp1TRS/aHWna4oHK+dmaYjTbRcZh04EwgHh9ogv1E6MXkWRhAHqly11JoXrsgNsdbsobswXhT32485cZAUBK2r+8ISvQ7JP4/4vWYXeBcNPsuoi56pGqLfHzxwie3eEZq6l49t7HtINMbbsL41AxOqgZSbu3v2T0K4E7YiK6Xg46h7/U5vRCWjCZb6/rO/jBjj7S9awSznRuV8qNDWGx4UiEbtZ+828KLg6xxB9lTQYanP6c6QUpTqvM1mg3BL4Sd/Ec94vsBJkWPqlDQzjV81x9LBXUUjC/y0yDq6URyLQmvdnExtxgLcH8X6POdi9fpA/rg927+bolEB99BVU9urp0YxQTvvpbwowxkUT2+cirG+qRkPthBteYinn4VPxOB98c1365cjXNzSkkENBkOmHHPJfkAT3guAT3t5ujno39por5naDw4pcmS6YXF1xUO4NCBPB+cuwrQXhB7SXJnBICBSPwx1qkSOBDSa+cWe45tfSvC6O95eYHs4ppH+bQu3d9ZGTMRzykMrfc3Y0Ubg6OnCoOrPH7bFK0PBjTBf5vbURQwjUGM8vyXJbuPA/kOfHyfg3yKm3PON9LTi9kFFc=
+    - secure: gOQUPsdBO1h/wqVGUt4EjLRBCPGZaNiMG5mRXC+Bhu6DY1K00NkjeclxvbWWi/Vc1mEdsho3unTL9YZlCyuQTQGvBBsn0GI7yKtzGb1ocnE3YKfND8gt4BUBXpmDlcymnrSINHycChtKnwxqGPZcY+VPRyZFxxNkn3aHZI5h19yL0OEzALyE87dEfbzVtgU8Fqt9LxSvKNxfTNr3KdGhmQ6O41GY2lDAYTufIi11Ttg2BmtMoG3d19PpuCk9n4sITd5F/WRzn1TEkU7EU6DmAaIcAmM8w5ILe/3a3gTsiEmD7T5riLJLALOF+LgPlYkjq8QCHQIT/Uj9wAlZOrt/JRM188qWfh0Ek+PFzMs4xL57NYCxbLeaCPhExgisJGvMDT7Xphnm2RiGMIDT99wqxT7F4J2CckxeQHHXG3HHzqPKSYglHi/sxYFaA8ayhOWa3uCqVXQqZamq2Vp5/uL+s0Yh0WDfRwm/GZPPUrmEv1jJgLxLF0VjQ5wCgURcqdaT8i1dr6U1qV3OvmYiHRkKFNanqPj3F9vxDg8NgMkI3dI464RpQHezlfJ5eTsb6h+0ylFSMpoBMimmRVRbX6lcilzGqnIylu3z4AqmmBuKoePCh1oj1hnGWFN8Y2qfltwcTvZBXVlrxZ83vvfj/akytdUt7l2uNS2++VaYJXpModQ=
+    - secure: o7VvnQLzpWxvTe1pPtDXV1L87vI2Fru3zX+mEdL5i/pS96rmqbm1xOWQtGjPRIU/8P0hlIkw3OJJxbDNlFxjk7UBYqX4FhyV7VnXCcBbqKtlVcKKYYyScW67frAb/iQAFRNgsphEcHKqdrxwAlxa6Cxgwlk3IFccpJ7p6Bl8AFFCk6UeY2yFQKqPNefrQdUvY8q/XFjUW3GBjCwpGIFueBB6Z3c7URkdCVWTWBDXnnUr4CZ8+NBRNKNAqDDMuHi4r1GvLQ6LzSjG6xYCMSzufzdM+X4FEpOrGy8Wqfg7DajvLDVlqcMZONXVi6A14mmrS0J0V7d3Rj7uKVbyx48Q/qVMe4PRUuRKQ0MfEmf3oYx+vEZUcnVvSD6wsQPQy20SUWJZEheltVLBCKQ3AB5WgH7Ix2PL6kNjAFsL4GFSJGmNjIfQf1076nLZX4ffYO+BZvp2zzhTQosjXZkUOVw3QFERgsouRuer9/yikkp2rZwMwAz0LvtT0ebKgC2OOYfgneVi7DCy1e8WRmr8f2VWWC23EDnkHZlgYm6jD1D7bEBlNNYLo0nq1abaXmDTwB+ztiZbOa0wGj+jCMZU3exQ6+5J4e1TsRcRme90LjSomSvkS2Bs3r5Q7JxH9sIUx3FnddQP5Qv2rjS+59I1cpbjKqa3Ej5iZCzbdxfvEgBWXd0=
+    - secure: Vue750xm4bNF8irIR7BxFlQsrKMGr92j2f4AtLJaQcpleovo8zcNlVPlk8w2aV1/oITo8KOkbuextCyuRatCNaiKDktshLz7bzJ8DbSJPU4Vr6sOXxWA1D1aw8T/f9WyJQJJGxYLCuFfyBBK+E0u9HNYx/R/nhvwtcY6OvOB9jJGhyS9o7rm3gco9pG+mTKy4RQTV5N7gJZmlQt4d9sTQwqpI2cHDXmtV3+JVsDj7v29/hJTmaPi5+eHt87xovJOxA/fttpxRtbP39fz3bBQbt727bOZ+yaxc434LcpQNUyXxiTrFDYWPxyRfRJLRWclDyTaw24ogxNE5F84QE+n2TtZZn+tgx/wB47LaaGr+9VTZqb9tvuC/FoXcj0SQaJSUlMSewbdOTPSgC/VimPABlnBJK6pb56VuOY6dKayA3nKRylDuj0DYC5j7NqDFA/43RhMbwuuDuCxpao6asEgdiNrZfiDEDf4gy2UIQQ9WJaieZ1oAqcqmZ4+IgFyP3kZA/xLEeCT9bn/Mb1155uFdV9L+vZt4SkKmI2fVM34Ci6mTtOAWtPsttgaT4IrroqKlU/B2OG299gzt80StXaoQlDKIu9GM1p5EiXRO4QFVbD7D1uF8+fj/5LJw+PbIiZGSqApmQ8djC31kKYpPyTEKYYz1qgCRSNqaXSTxg1L8AI=
+  matrix:
+    - tf_version=0.11.3
 
 sudo: required
-
 language: bash
-
 before_install:
-  - wget https://releases.hashicorp.com/terraform/${tf_version}/terraform_${tf_version}_linux_amd64.zip -O /tmp/terraform.zip
-  - sudo unzip -d /usr/local/bin/ /tmp/terraform.zip
-  - chmod +x bootstrap_linux.sh && ./bootstrap_linux.sh
-  - terraform init
-
+- wget https://releases.hashicorp.com/terraform/${tf_version}/terraform_${tf_version}_linux_amd64.zip
+  -O /tmp/terraform.zip
+- sudo unzip -d /usr/local/bin/ /tmp/terraform.zip
+- chmod +x bootstrap_linux.sh && ./bootstrap_linux.sh
+- terraform init
 script:
-  - make test
-  - make fmt
-  - make plan
+- make test
+- make fmt
+- if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then make plan; fi
