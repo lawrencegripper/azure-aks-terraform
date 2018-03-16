@@ -1,2 +1,4 @@
 .terraform
 terraform.tfstate
+terraform-provider-kubernetes*
+*.tfstate*

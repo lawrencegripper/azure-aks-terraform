@@ -1,9 +1,3 @@
-variable "name" {
-  type        = "string"
-  description = "Name of this cluster."
-  default     = "akc-example"
-}
-
 variable "client_id" {
   type        = "string"
   description = "Client ID"

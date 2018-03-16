@@ -5,11 +5,17 @@
 
 This project aims to show a simple example of how you can setup a fully featured k8s cluster on Azure using terraform. 
 
-In the repo we have two templates. The first deploys K8s with Log Analytics Container Monitoring configured and nothing else. The second is deploys commonly used services like managed Postgres, Redis and monitoring (via Azure Log Analytics) to jump start your work. 
+## What does it create?
+
+It creates a fully managed Kuberentes cluster in Azure and deploy managed Azure Monitoring and Redis - then it hooks them all up. 
+
+The `main.tf` deploys a [`resourcegroup`](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview) in which an [`aks cluster`](https://docs.microsoft.com/en-us/azure/aks/), [`log analytics workspace`](https://docs.microsoft.com/en-us/azure/log-analytics/), [`managed redis cache`](https://docs.microsoft.com/en-us/azure/redis-cache/) and a [`container monitoring`](https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-containers) solution are added.
+
+Then the connection details from the `redis` and the `log analytics workspace` are injected into the Kuberentes cluster as `Secrets` and a `Deamonset` is created to host the `container monitoring solution agent`. 
 
 ## Using 
 
-### Tooling
+### Required Tooling
 
 - Terraform
 - Azure CLI
@@ -39,6 +45,9 @@ linux_admin_ssh_publickey = "ssh-rsa AAAasdfasdc2EasdfasdfAAABAQC+b42lMQef/l5D8c
 
 ## Notes/FAQ
 
-1. Why haven't you used `modules` to organize the template? We'd suggest using them but to keep things simple and easy readable for those new to terraform we haven't included them. 
+1. Why haven't you used `modules` to organize the template? We'd suggest using them but to keep things simple, and easy readable for those new to Terraform, we haven't included them. 
+
+2. I receive the error `Error: kubernetes_daemonset.container_agent: Provider doesn't support resource: kubernetes_daemonset`: Delete the `.terraform` folder from the directory then make sure you have downloaded the community edition of the kubernetes provider and it is named correctly stored in the current directory. 
  
+3. I receive the error `* provider.azurerm: No valid (unexpired) Azure CLI Auth Tokens found. Please run az login.`: Run any `az` command which talks to Azure and it will update the token. For example run `az group list` then retry the Terraform command. 
 

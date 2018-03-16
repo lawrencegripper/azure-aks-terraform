@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "cluster" {
-  name     = "k8s-log-analytics-integrated"
-  location = "eastus"
+  name     = "${var.resource_group_name}"
+  location = "${var.resource_group_location}"
 }
 
 resource "random_id" "workspace" {
@@ -67,12 +67,46 @@ resource "azurerm_log_analytics_solution" "container_monitoring" {
   }
 }
 
+resource "random_id" "redis" {
+  keepers = {
+    azi_id = 1
+  }
+
+  byte_length = 8
+}
+
+resource "azurerm_redis_cache" "redis" {
+  name                = "redis${random_id.redis.hex}"
+  location            = "${azurerm_resource_group.cluster.location}"
+  resource_group_name = "${azurerm_resource_group.cluster.name}"
+  capacity            = 0
+  family              = "C"
+  sku_name            = "Basic"
+  enable_non_ssl_port = false
+
+  redis_configuration {
+    maxclients = 256
+  }
+}
+
 provider "kubernetes" {
   host = "${azurerm_kubernetes_cluster.aks.kube_config.0.host}"
 
   client_certificate     = "${base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate)}"
   client_key             = "${base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_key)}"
   cluster_ca_certificate = "${base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)}"
+}
+
+resource "kubernetes_secret" "redis_secret" {
+  metadata {
+    name = "rediskeys"
+  }
+
+  data {
+    host = "${azurerm_redis_cache.redis.hostname}"
+    port = "${azurerm_redis_cache.redis.port}"
+    key  = "${azurerm_redis_cache.redis.primary_access_key}"
+  }
 }
 
 resource "kubernetes_namespace" "monitoring" {
