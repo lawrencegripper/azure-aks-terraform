@@ -29,13 +29,13 @@ Then the connection details from the `redis` and the `log analytics workspace` a
 3. Create a `varaibles.tfvars` file and add your service principal `clientid` and `clientsecret` as variables. Also add an ssh key and username for logging into k8s agent nodes.
 
 ```hcl
-client_id = "2f61810e-7f8d-49fd-8c0e-c4f9e7151f9f"
+client_id = "2f61810e-7f8d-49fd-8c0e-c4ffake51f9f"
 
-client_secret = "57f8b670-012d-42b2-a0f8-c3dd17e239ad"
+client_secret = "57f8b670-012d-42b2-a0f8-c3fakee239ad"
 
 linux_admin_username = ""
 
-linux_admin_ssh_publickey = "ssh-rsa AAAasdfasdc2EasdfasdfAAABAQC+b42lMQef/l5D8c7kcNZNf6m37bdfITpUVcfT7trFT/UAWAjym5rxda0PwdkasdfasdfasdfasdfVspDGCYWvHpa3M9UMM6cgdlq+R4ISif4W04yeOmjkRR5j9pcasdfasdfasdfW6PJcgw7IyWIWSONYCSNK6Tk5Yki3N+nAvIxU34+YxPTOpRw42w1AcuorsomethinglikethisnO15SGqFhNagUP/wV/18fvwENt3hsukiBmZ21aP8YqoFWuBg3 james@something"
+linux_admin_ssh_publickey = "ssh-rsa AAAasdfasdc2EasdfasdfAAABAQC+b42lMQef/l5D8c7kcNZNf6m37bdfITpUVcfakerFT/UAWAjym5rxda0PwdkasdfasdfasdfasdfVspDGCYWvHpa3M9UMM6cgdlq+R4ISif4W04yeOmjkRR5j9pcasdfasdfasdfW6PJcgw7IyWIWSONYCSNK6Tk5Yki3N+nAvIxU34+YxPTOpRw42w1AcuorsomethinglikethisnO15SGqFhNagUP/wV/18fvwENt3hsukiBmZ21aP8YqoFWuBg3 james@something"
 
 ```
 5. Download the Kuberentes provider by running `boostrap_linux.sh` (or mac, windows)
