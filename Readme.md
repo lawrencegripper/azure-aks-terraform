@@ -2,9 +2,6 @@
 
 [![Build Status](https://travis-ci.org/lawrencegripper/azure-aks-terraform.svg?branch=master)](https://travis-ci.org/lawrencegripper/azure-aks-terraform)
 
-> Warning: This template relies on two PR's which are not yet be released. We expect them to be available shortly:
-    @jjcollinge: [AKS credentials export](https://github.com/terraform-providers/terraform-provider-azurerm/pull/953) & @lawrencegripper: [Log Analytics Solution provider](https://github.com/terraform-providers/terraform-provider-azurerm/pull/952)
-
 This project aims to show a simple example of how you can setup a fully featured k8s cluster on Azure using terraform. 
 
 ## What does it create? 
