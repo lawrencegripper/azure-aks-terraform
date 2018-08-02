@@ -8,6 +8,18 @@ variable "client_secret" {
   description = "Client secret."
 }
 
+variable "node_count" {
+ default = 2 
+}
+
+
+variable "node_sku" {
+  type = "string"
+  description = "the node sku to use"
+  default = "Standard_DS2_v2"
+}
+
+
 variable "resource_group_name" {
   type        = "string"
   description = "Name of the azure resource group."
@@ -23,9 +35,4 @@ variable "resource_group_location" {
 variable "linux_admin_username" {
   type        = "string"
   description = "User name for authentication to the Kubernetes linux agent virtual machines in the cluster."
-}
-
-variable "linux_admin_ssh_publickey" {
-  type        = "string"
-  description = "Configure all the linux virtual machines in the cluster with the SSH RSA public key string. The key should include three parts, for example 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'"
 }
