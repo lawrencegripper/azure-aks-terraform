@@ -1,0 +1,36 @@
+{
+  "Name": "Kuberentes Service Principal",
+  "IsCustom": true,
+  "Description": "The required permissions for the SP assigned to an AKS cluster",
+  "Actions": [
+    //Enable machine access for disk attach
+    "Microsoft.Compute/virtualMachines/read",
+    "Microsoft.Compute/virtualMachines/write",
+    //Enable access to create managed disks for volumes
+    "Microsoft.Compute/disks/write",
+    "Microsoft.Compute/disks/read",
+    //Enable creation of load balanced service
+    "Microsoft.Network/publicIPAddresses/read",
+    "Microsoft.Network/publicIPAddresses/write",
+    "Microsoft.Network/loadBalancers/write",
+    "Microsoft.Network/loadBalancers/read",
+    //Enable routetable updates (deny ability to delete/create new routetables just routes under them)
+    "Microsoft.Network/routeTables/read",
+    "Microsoft.Network/routeTables/routes/read",
+    "Microsoft.Network/routeTables/routes/write",
+    "Microsoft.Network/routeTables/routes/delete",
+    //Enable access to Azure files for volumes
+    "Microsoft.Storage/storageAccounts/fileServices/fileShare/read",
+    //Enable registry access for image pull
+    "Microsoft.ContainerRegistry/registries/read"
+  ],
+  "NotActions": [
+  // Deny access to all VM actions, this includes Start, Stop, Restart, Delete, Redeploy, Login, Extensions etc
+  "Microsoft.Compute/virtualMachines/*/action",
+  "Microsoft.Compute/virtualMachines/extensions/*"
+  ],
+  "AssignableScopes": [
+    "/subscription/xxxx"
+  ]
+}
+

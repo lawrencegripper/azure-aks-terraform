@@ -1,17 +1,7 @@
-variable "cluster_name" {}
-variable "cluster_resource_group_name" {}
-variable "agents_resource_group_name" {}
-
-data "azurerm_resource_group" "cluster" {
-  name = "${var.cluster_resource_group_name}"
-}
-
-data "azurerm_resource_group" "agents" {
-  name = "${var.agents_resource_group_name}"
-}
+variable "sp_name" {}
 
 resource "azurerm_azuread_application" "aks_app" {
-  name = "${var.cluster_name}"
+  name = "${var.sp_name}"
 }
 
 resource "azurerm_azuread_service_principal" "aks_sp" {
@@ -39,10 +29,12 @@ resource "azurerm_azuread_service_principal_password" "aks_sp_password" {
   }
 }
 
+data "azurerm_subscription" "sub" {}
+
 // Attempt to create a 'least privilidge' role for SP used by AKS
 resource "azurerm_role_definition" "aks_sp_role_rg" {
   name        = "aks_sp_role"
-  scope       = "${data.azurerm_resource_group.agents.id}"
+  scope       = "${data.azurerm_subscription.sub.id}"
   description = "This role provides the required permissions needed by Kubernetes to: Manager VMs, Routing rules, Mount azure files and Read container repositories"
 
   permissions {
@@ -53,35 +45,30 @@ resource "azurerm_role_definition" "aks_sp_role_rg" {
       "Microsoft.Compute/disks/read",
       "Microsoft.Network/loadBalancers/write",
       "Microsoft.Network/loadBalancers/read",
+      "Microsoft.Network/routeTables/read",
       "Microsoft.Network/routeTables/routes/read",
       "Microsoft.Network/routeTables/routes/write",
+      "Microsoft.Network/routeTables/routes/delete",
       "Microsoft.Storage/storageAccounts/fileServices/fileShare/read",
       "Microsoft.ContainerRegistry/registries/read",
+      "Microsoft.Network/publicIPAddresses/read",
+      "Microsoft.Network/publicIPAddresses/write",
     ]
 
     not_actions = [
-      // Deny access to all VM actions, this includes Start, Stop, Restart, Delete, Redeploy, Login, etc
+      // Deny access to all VM actions, this includes Start, Stop, Restart, Delete, Redeploy, Login, Extensions etc
       "Microsoft.Compute/virtualMachines/*/action",
-
-      "Microsoft.Compute/virtualMachines/extensions",
+      "Microsoft.Compute/virtualMachines/extensions/*",
     ]
   }
 
   assignable_scopes = [
-    "${data.azurerm_resource_group.agents.id}",
+    "${data.azurerm_subscription.sub.id}",
   ]
 }
 
-resource "azurerm_role_assignment" "aks_service_principal_role_cluster" {
-  scope                = "${data.azurerm_resource_group.cluster.id}"
-  role_definition_name = "Owner"
-  principal_id         = "${azurerm_azuread_service_principal.aks_sp.id}"
-}
-
-resource "azurerm_role_assignment" "aks_service_principal_role_agents" {
-  scope                = "${data.azurerm_resource_group.agents.id}"
-  role_definition_name = "Owner"
-  principal_id         = "${azurerm_azuread_service_principal.aks_sp.id}"
+output "aks_role_name" {
+  value = "${azurerm_role_definition.aks_sp_role_rg.name}"
 }
 
 output "client_id" {
