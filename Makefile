@@ -5,7 +5,7 @@ modules = $(shell find . -type f -name "*.tf" -exec dirname {} \;|sort -u)
 default: test fmt plan
 
 test:
-	@for m in $(modules); do (terraform validate -var-file=variables.example.tfvars "$$m" && echo "√ Valid: $$m") || exit 1 ; done
+	terraform validate -var-file=variables.example.tfvars
 
 fmt:
 	@if [ `terraform fmt | wc -c` -ne 0 ]; then echo "terraform files need be formatted"; exit 1; fi
