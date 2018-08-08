@@ -77,7 +77,6 @@ output "aks_role_name" {
   value = "aks_sp_role"
 }
 
-
 output "sp_id" {
   value = "${azurerm_azuread_service_principal.aks_sp.id}"
 }
