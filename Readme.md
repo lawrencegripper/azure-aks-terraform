@@ -10,6 +10,8 @@ The `main.tf` deploys a [`resourcegroup`](https://docs.microsoft.com/en-us/azure
 
 Then the connection details from the `redis` and the `log analytics workspace` are injected into the Kuberentes cluster as `Secrets` and a `Deamonset` is created to host the `container monitoring solution agent`. 
 
+A `Service Principal` is also created for use by the Kubernetes cluster.
+
 ## Using 
 
 ### Required Tooling
@@ -34,10 +36,17 @@ linux_admin_ssh_publickey = "ssh-rsa AAAasdfasdc2EasdfasdfAAABAQC+b42lMQef/l5D8c
 ```
 5. Download the Kuberentes provider by running `boostrap_linux.sh` (or mac, windows)
 4. Run `terraform init` then `terraform plan -var-file=variables.tfvars` to see what will be created... finally if it looks good run `terraform apply -var-file=variables.tfvars` to create your cluster
+5. Then run `az aks list` and `az aks get-credentials` to access your cluster
 
-## Notes/FAQ
+## Notes
 
-1. ~~Why haven't you used `modules` to organize the template? We'd suggest using them but to keep things simple, and easy readable for those new to Terraform, we haven't included them.~~ I changed my mind on this
+### Least privilidge
+
+The `sp_least_privilidge` option means the `Service Principal` used by AKS is configured to a limited set of permissions. This is experimental and untested. Only use this setting if you're happy to be suprised. Also note that AKS assigns the contributor role to the SP on the MC_* resource group so this role needs to be manually removed after the TF template has run. 
+
+### FAQ
+
+1. ~~Why haven't you used `modules` to organize the template? We'd suggest using them but to keep things simple, and easy readable for those new to Terraform, we haven't included them.~~ I changed my mind on this and now use modules for some components. 
 
 2. I receive the error `Error: kubernetes_daemonset.container_agent: Provider doesn't support resource: kubernetes_daemonset`: Delete the `.terraform` folder from the directory then make sure you have downloaded the community edition of the kubernetes provider and it is named correctly stored in the current directory. In the root dir run `rm -r .terraform` then rerun the correct bootstrap script. 
  

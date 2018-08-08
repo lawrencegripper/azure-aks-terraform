@@ -1,5 +1,9 @@
 variable "sp_name" {}
 
+variable "sp_least_privilidge" {
+  default = false
+}
+
 resource "azurerm_azuread_application" "aks_app" {
   name = "${var.sp_name}"
 }
@@ -33,6 +37,7 @@ data "azurerm_subscription" "sub" {}
 
 // Attempt to create a 'least privilidge' role for SP used by AKS
 resource "azurerm_role_definition" "aks_sp_role_rg" {
+  count       = "${var.sp_least_privilidge}"
   name        = "aks_sp_role"
   scope       = "${data.azurerm_subscription.sub.id}"
   description = "This role provides the required permissions needed by Kubernetes to: Manager VMs, Routing rules, Mount azure files and Read container repositories"
@@ -58,6 +63,7 @@ resource "azurerm_role_definition" "aks_sp_role_rg" {
     not_actions = [
       // Deny access to all VM actions, this includes Start, Stop, Restart, Delete, Redeploy, Login, Extensions etc
       "Microsoft.Compute/virtualMachines/*/action",
+
       "Microsoft.Compute/virtualMachines/extensions/*",
     ]
   }
@@ -68,7 +74,12 @@ resource "azurerm_role_definition" "aks_sp_role_rg" {
 }
 
 output "aks_role_name" {
-  value = "${azurerm_role_definition.aks_sp_role_rg.name}"
+  value = "aks_sp_role"
+}
+
+
+output "sp_id" {
+  value = "${azurerm_azuread_service_principal.aks_sp.id}"
 }
 
 output "client_id" {
