@@ -35,7 +35,6 @@ variable "linux_admin_username" {
 variable "linux_admin_ssh_publickey" {
   type        = "string"
   description = "Configure all the linux virtual machines in the cluster with the SSH RSA public key string. The key should include three parts, for example 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'"
-  default     = "use_users_ssh_key"
 }
 
 variable "sp_least_privilidge" {

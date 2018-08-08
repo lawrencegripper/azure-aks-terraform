@@ -36,7 +36,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     ssh_key {
       // If the user hasn't set a key the default will be "user_users_ssh_key", here we check for that and 
       // load the ssh from file if this is the case. 
-      key_data = "${var.linux_admin_ssh_publickey == "use_users_ssh_key" ? file("~/.ssh/id_rsa.pub") : var.linux_admin_ssh_publickey}"
+      key_data = "${var.linux_admin_ssh_publickey}"
     }
   }
 
