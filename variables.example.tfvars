@@ -1,7 +1,3 @@
-client_id = "2f61810e-7f8d-49fd-8c0e-c4ffake51f9f"
-
-client_secret = "57f8b670-012d-42b2-a0f8-c3fakee239ad"
-
 linux_admin_username = ""
 
 resource_group_name = "stable_terraform_tests"
