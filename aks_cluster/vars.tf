@@ -16,11 +16,9 @@ variable "resource_group_name" {
   description = "The resource group name to deploy into"
 }
 
-variable "oms_workspace_id" {
+variable "oms_id" {
   description = "The OMS ID used for container logging"
 }
-
-
 
 variable "linux_admin_username" {
   type        = "string"

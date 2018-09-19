@@ -26,6 +26,6 @@ resource "azurerm_log_analytics_workspace" "workspace" {
   sku                 = "Free"
 }
 
-output "workspace_id" {
-  value = "${azurerm_log_analytics_workspace.workspace.workspace_id}"
+output "id" {
+  value = "${azurerm_log_analytics_workspace.workspace.id}"
 }

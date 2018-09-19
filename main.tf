@@ -45,6 +45,6 @@ module "aks_cluster_1" {
   linux_admin_ssh_publickey = "${var.linux_admin_ssh_publickey}"
   
   subnet_id = "${azurerm_subnet.subnet_cluster_1.id}"
-  oms_workspace_id = "${module.oms.workspace_id}"
+  oms_id = "${module.oms.id}"
 }
 
