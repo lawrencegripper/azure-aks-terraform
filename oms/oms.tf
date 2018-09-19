@@ -10,8 +10,18 @@ variable "resource_group_location" {
   default     = "eastus"
 }
 
+
+resource "random_id" "workspace" {
+  keepers = {
+    # Generate a new id each time we switch to a new resource group
+    group_name = "${var.resource_group_name}"
+  }
+
+  byte_length = 8
+}
+
 resource "azurerm_log_analytics_workspace" "workspace" {
-  name                = "k8s-workspace"
+  name                = "k8s-workspace-${random_id.workspace.hex}"
   location            = "${var.resource_group_location}"
   resource_group_name = "${var.resource_group_name}"
   sku                 = "standalone"

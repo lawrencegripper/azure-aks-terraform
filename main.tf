@@ -15,20 +15,20 @@ module "oms" {
 ## Create the first network and cluster
 
 resource azurerm_network_security_group "sercurity_group_cluster_1" {
-  name                = "akc-1-nsg"
+  name                = "aks-1-nsg"
   location            = "${azurerm_resource_group.cluster.location}"
   resource_group_name = "${azurerm_resource_group.cluster.name}"
 }
 
 resource "azurerm_virtual_network" "network_cluster_1" {
-  name                = "akc-1-vnet"
+  name                = "aks-1-vnet"
   location            = "${azurerm_resource_group.cluster.location}"
   resource_group_name = "${azurerm_resource_group.cluster.name}"
   address_space       = ["10.1.0.0/16"]
 }
 
 resource "azurerm_subnet" "subnet_cluster_1" {
-  name                      = "akc-1-subnet"
+  name                      = "aks-1-subnet"
   resource_group_name       = "${azurerm_resource_group.cluster.name}"
   network_security_group_id = "${azurerm_network_security_group.sercurity_group_cluster_1.id}"
   address_prefix            = "10.1.0.0/24"
@@ -53,6 +53,27 @@ module "aks_cluster_1" {
   oms_id    = "${module.oms.id}"
 }
 
+resource "azurerm_subnet" "subnet_jumpbox_1" {
+  name                      = "aks-1-jumpbox-subnet"
+  resource_group_name       = "${azurerm_resource_group.cluster.name}"
+  network_security_group_id = "${azurerm_network_security_group.sercurity_group_cluster_1.id}"
+  address_prefix            = "10.1.1.0/24"
+  virtual_network_name      = "${azurerm_virtual_network.network_cluster_1.name}"
+}
+
+module "aks_cluster_1_jumpbox" {
+  source = "jumpbox"
+
+  prefix = "jumpbox"
+  linux_admin_username      = "${var.linux_admin_username}"
+  linux_admin_ssh_publickey = "${var.linux_admin_ssh_publickey}"
+
+  resource_group_name = "${azurerm_resource_group.cluster.name}"
+  location            = "${var.resource_group_location}"
+
+  subnet_id = "${azurerm_subnet.subnet_jumpbox_1.id}"
+}
+
 ## Create the second network and cluster
 
 resource azurerm_network_security_group "sercurity_group_cluster_2" {
@@ -71,9 +92,9 @@ resource "azurerm_virtual_network" "network_cluster_2" {
 resource "azurerm_subnet" "subnet_cluster_2" {
   name                      = "aks-2-subnet"
   resource_group_name       = "${azurerm_resource_group.cluster.name}"
-  network_security_group_id = "${azurerm_network_security_group.sercurity_group_cluster_1.id}"
+  network_security_group_id = "${azurerm_network_security_group.sercurity_group_cluster_2.id}"
   address_prefix            = "10.2.0.0/24"
-  virtual_network_name      = "${azurerm_virtual_network.network_cluster_1.name}"
+  virtual_network_name      = "${azurerm_virtual_network.network_cluster_2.name}"
 }
 
 module "aks_cluster_2" {
