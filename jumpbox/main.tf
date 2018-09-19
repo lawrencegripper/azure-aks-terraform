@@ -68,5 +68,5 @@ resource "azurerm_virtual_machine" "main" {
 }
 
 output "ssh_command" {
-  value = "ssh ${var.admin_username}@${azurerm_public_ip.pip.ip_address}"
+  value = "ssh ${var.linux_admin_username}@${azurerm_public_ip.pip.ip_address}"
 }
