@@ -6,9 +6,12 @@ variable "resource_group_name" {
 }
 
 variable "resource_group_location" {
-  type        = "string"
+  type        = "list"
   description = "Location of the azure resource group."
-  default     = "eastus"
+  default     = [
+    "eastus",
+    "westus"
+  ]
 }
 
 variable "kubetnetes_version" {

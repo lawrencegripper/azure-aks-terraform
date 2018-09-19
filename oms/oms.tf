@@ -21,7 +21,7 @@ resource "random_id" "workspace" {
 }
 
 resource "azurerm_log_analytics_workspace" "workspace" {
-  name                = "k8s-workspace-${random_id.workspace.hex}"
+  name                = "k8sworkspace${random_id.workspace.hex}"
   location            = "${var.resource_group_location}"
   resource_group_name = "${var.resource_group_name}"
   sku                 = "standalone"
