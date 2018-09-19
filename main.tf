@@ -53,10 +53,32 @@ module "aks_cluster_1" {
   oms_id    = "${module.oms.id}"
 }
 
+##  Create a jumpbox in Cluster 1's vnet for debugging
+
+resource azurerm_network_security_group "security_group_jumpbox_1" {
+  name                = "aks-1-jumpbox-nsg"
+  location            = "${azurerm_resource_group.cluster.location}"
+  resource_group_name = "${azurerm_resource_group.cluster.name}"
+  
+  security_rule {
+    name                       = "allow-ssh"
+    description                = "Allow SSH"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "Internet"
+    destination_address_prefix = "*"
+  }
+}
+
+
 resource "azurerm_subnet" "subnet_jumpbox_1" {
   name                      = "aks-1-jumpbox-subnet"
   resource_group_name       = "${azurerm_resource_group.cluster.name}"
-  network_security_group_id = "${azurerm_network_security_group.sercurity_group_cluster_1.id}"
+  network_security_group_id = "${azurerm_network_security_group.security_group_jumpbox_1.id}"
   address_prefix            = "10.1.1.0/24"
   virtual_network_name      = "${azurerm_virtual_network.network_cluster_1.name}"
 }
@@ -64,7 +86,7 @@ resource "azurerm_subnet" "subnet_jumpbox_1" {
 module "aks_cluster_1_jumpbox" {
   source = "jumpbox"
 
-  prefix = "jumpbox"
+  prefix = "aks-1-jumpbox"
   linux_admin_username      = "${var.linux_admin_username}"
   linux_admin_ssh_publickey = "${var.linux_admin_ssh_publickey}"
 
@@ -114,6 +136,50 @@ module "aks_cluster_2" {
   subnet_id = "${azurerm_subnet.subnet_cluster_2.id}"
   oms_id    = "${module.oms.id}"
 }
+
+##  Create a jumpbox in Cluster 2's vnet for debugging
+
+resource azurerm_network_security_group "security_group_jumpbox_2" {
+  name                = "aks-2-jumpbox-nsg"
+  location            = "${azurerm_resource_group.cluster.location}"
+  resource_group_name = "${azurerm_resource_group.cluster.name}"
+  
+  security_rule {
+    name                       = "allow-ssh"
+    description                = "Allow SSH"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "Internet"
+    destination_address_prefix = "*"
+  }
+}
+
+
+resource "azurerm_subnet" "subnet_jumpbox_2" {
+  name                      = "aks-2-jumpbox-subnet"
+  resource_group_name       = "${azurerm_resource_group.cluster.name}"
+  network_security_group_id = "${azurerm_network_security_group.security_group_jumpbox_2.id}"
+  address_prefix            = "10.2.1.0/24"
+  virtual_network_name      = "${azurerm_virtual_network.network_cluster_2.name}"
+}
+
+module "aks_cluster_2_jumpbox" {
+  source = "jumpbox"
+
+  prefix = "jumpbox-2"
+  linux_admin_username      = "${var.linux_admin_username}"
+  linux_admin_ssh_publickey = "${var.linux_admin_ssh_publickey}"
+
+  resource_group_name = "${azurerm_resource_group.cluster.name}"
+  location            = "${var.resource_group_location}"
+
+  subnet_id = "${azurerm_subnet.subnet_jumpbox_2.id}"
+}
+
 
 ## Peer networks 
 

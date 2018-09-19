@@ -38,6 +38,7 @@ resource "azurerm_log_analytics_solution" "container_insights" {
   plan {
     publisher = "Microsoft"
     product   = "OMSGallery/ContainerInsights"
+    promotion_code = ""
   }
 }
 
