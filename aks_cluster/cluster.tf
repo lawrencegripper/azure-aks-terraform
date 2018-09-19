@@ -5,8 +5,13 @@ resource "random_integer" "random_int" {
   max = 999
 }
 
+variable "cluster_name_prefix" {
+  description = "Cluster prefix is used to create the clusters name"
+}
+
+
 locals {
-  cluster_name               = "aks-${random_integer.random_int.result}"
+  cluster_name               = "${var.cluster_name_prefix}-${random_integer.random_int.result}-${var.location}"
 }
 
 # Create a SP for use in the cluster
@@ -16,7 +21,7 @@ module "service_principal" {
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
-  name       = "${local.cluster_name}-${var.location}"
+  name       = "${local.cluster_name}"
   location   = "${var.location}"
   dns_prefix = "${local.cluster_name}"
 
