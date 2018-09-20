@@ -1,4 +1,3 @@
-
 # Keep the AKS name (and dns label) somewhat unique
 resource "random_integer" "random_int" {
   min = 100
@@ -11,13 +10,18 @@ variable "cluster_name_prefix" {
 
 
 locals {
-  cluster_name               = "${var.cluster_name_prefix}-${random_integer.random_int.result}-${var.location}"
+  cluster_name = "${var.cluster_name_prefix}-${random_integer.random_int.result}-${var.location}"
+}
+
+data "azurerm_resource_group" "cluster" {
+  name = "${var.resource_group_name}"
 }
 
 # Create a SP for use in the cluster
 module "service_principal" {
-  source = "service_principal"
-  sp_name             = "${local.cluster_name}"
+  source            = "service_principal"
+  sp_name           = "${local.cluster_name}"
+  resource_group_id = "${data.azurerm_resource_group.cluster.id}"
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
@@ -48,10 +52,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   addon_profile {
-      oms_agent {
-          enabled = true
-          log_analytics_workspace_id = "${var.oms_id}"
-      }
+    oms_agent {
+      enabled                    = true
+      log_analytics_workspace_id = "${var.oms_id}"
+    }
   }
 
   network_profile {
@@ -69,6 +73,6 @@ output "kube_config_data" {
     client_certificate     = "${azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate}"
     client_key             = "${azurerm_kubernetes_cluster.aks.kube_config.0.client_key}"
     cluster_ca_certificate = "${azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate}"
-    kube_config_raw = "${azurerm_kubernetes_cluster.aks.kube_config_raw}"    
+    kube_config_raw        = "${azurerm_kubernetes_cluster.aks.kube_config_raw}"
   }
 }
