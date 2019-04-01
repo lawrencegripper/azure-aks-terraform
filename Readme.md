@@ -1,3 +1,5 @@
+# Warning: This sample is currently outdated and unmaintained. 
+
 # Kubernetes on Azure using Terraform
 
 [![Build Status](https://travis-ci.org/lawrencegripper/azure-aks-terraform.svg?branch=master)](https://travis-ci.org/lawrencegripper/azure-aks-terraform)
